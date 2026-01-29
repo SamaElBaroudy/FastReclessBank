@@ -1,5 +1,6 @@
 package com.fastrecklessbank.bank.controller;
 
+import com.fastrecklessbank.bank.dto.AccountDetailsResponse;
 import com.fastrecklessbank.bank.dto.TransferRequest;
 import com.fastrecklessbank.bank.model.Account;
 import com.fastrecklessbank.bank.service.AccountService;
@@ -50,7 +51,11 @@ public class AccountController {
     
     @GetMapping
     public Collection<Account> getAll() {
-        return service.getAllAccounts(); 
+        return service.getAllAccounts();
+    }
+    @GetMapping
+    public AccountDetailsResponse getAccountDetails(@PathVariable UUID id) {
+        return service.getAccountDetails(id);
     }
 
 }

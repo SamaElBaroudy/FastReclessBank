@@ -1,5 +1,6 @@
 package com.fastrecklessbank.bank.service;
 
+import com.fastrecklessbank.bank.dto.AccountDetailsResponse;
 import com.fastrecklessbank.bank.exception.AccountNotFoundException;
 import com.fastrecklessbank.bank.exception.InsufficientFundsException;
 import com.fastrecklessbank.bank.model.Account;
@@ -110,10 +111,26 @@ public class AccountService {
             first.getLock().unlock();
         }
     }
-
+    // to list all accounts 
     public Collection<Account> getAllAccounts() {
         return accounts.values();
     }
-
+    // to get the account details 
+    public AccountDetailsResponse getAccountDetails(UUID id) {
+        Account account = accounts.get(id);
+        if (account == null)
+            throw new AccountNotFoundException(id);
+        account.getLock().lock(); // locking for consistency between the balance and the transfers
+        try{
+            return new AccountDetailsResponse(
+                    id,
+                    account.getBalance(),
+                    account.getLastOutgoingTransfers()
+                ); 
+        }
+        finally {
+            account.getLock().unlock();
+        }
+    }
     
 }
