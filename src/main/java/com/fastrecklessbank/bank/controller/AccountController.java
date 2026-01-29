@@ -53,7 +53,7 @@ public class AccountController {
     public Collection<Account> getAll() {
         return service.getAllAccounts();
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public AccountDetailsResponse getAccountDetails(@PathVariable UUID id) {
         return service.getAccountDetails(id);
     }
