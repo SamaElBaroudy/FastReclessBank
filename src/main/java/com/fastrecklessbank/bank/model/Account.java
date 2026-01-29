@@ -9,10 +9,17 @@ public class Account {
     private final UUID id;
     private BigDecimal balance;
     private final ReentrantLock lock = new ReentrantLock();
+    
+    // ring buffer to save the 50 last outgoing transfer
+    private final OutgoingTransfer[] transfers = new OutgoingTransfer[50];
+    private int transferIndex = 0;
+    private int transferCount = 0;
 
     public Account() {
         this.id = UUID.randomUUID();
         this.balance = BigDecimal.ZERO;
+
+        
     }
 
     public UUID getId() {
@@ -33,5 +40,24 @@ public class Account {
 
     public ReentrantLock getLock() {
         return lock;
+    }
+
+    // adding the outgoing transfer to the buffer 
+    public void addOutgoingTransfer(OutgoingTransfer transfer) {
+        transfers[transferIndex] = transfer;
+        transferIndex = (transferIndex + 1) % transfers.length;
+        transferCount = Math.min(transferCount + 1, transfers.length);
+
+    }
+    
+    public OutgoingTransfer[] getLastOutgoingTransfers() {
+
+        OutgoingTransfer[] result = new OutgoingTransfer[transferCount];
+        // transfering from new to old  
+        for (int i = 0; i < transferCount; i++) {
+            int idx = (transferIndex - 1 - i + transfers.length) % transfers.length;
+            result[i] = transfers[idx];
+        }
+        return result;
     }
 }

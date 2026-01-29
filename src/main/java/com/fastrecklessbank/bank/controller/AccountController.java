@@ -6,6 +6,7 @@ import com.fastrecklessbank.bank.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.UUID;
 
 @RestController
@@ -42,11 +43,14 @@ public class AccountController {
     @PostMapping("/transfer")
     public void transfer(@RequestBody TransferRequest request) {
         service.transfer(
-            request.fromAccountId(),
-            request.toAccountId(),
-            request.amount()
-        );
+                request.fromAccountId(),
+                request.toAccountId(),
+                request.amount());
     }
-
+    
+    @GetMapping
+    public Collection<Account> getAll() {
+        return service.getAllAccounts(); 
+    }
 
 }

@@ -3,9 +3,13 @@ package com.fastrecklessbank.bank.service;
 import com.fastrecklessbank.bank.exception.AccountNotFoundException;
 import com.fastrecklessbank.bank.exception.InsufficientFundsException;
 import com.fastrecklessbank.bank.model.Account;
+import com.fastrecklessbank.bank.model.OutgoingTransfer;
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -76,13 +80,15 @@ public class AccountService {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
-        
-        Account from = getAccount(fromId); 
+
+        Account from = getAccount(fromId);
         Account to = getAccount(toId);
-        
-        if (from == null) throw new AccountNotFoundException(fromId);
-        if (to == null) throw new AccountNotFoundException(toId);
-        
+
+        if (from == null)
+            throw new AccountNotFoundException(fromId);
+        if (to == null)
+            throw new AccountNotFoundException(toId);
+
         Account first = fromId.compareTo(toId) < 0 ? from : to;
         Account second = fromId.compareTo(toId) < 0 ? to : from;
 
@@ -96,12 +102,18 @@ public class AccountService {
             from.withdraw(amount);
             to.deposit(amount);
 
-            // later: record outgoing transfer here
+            // record outgoing transfer 
+            from.addOutgoingTransfer(
+                    new OutgoingTransfer(toId, amount, Instant.now()));
         } finally {
             second.getLock().unlock();
             first.getLock().unlock();
         }
+    }
 
-        }
+    public Collection<Account> getAllAccounts() {
+        return accounts.values();
+    }
+
     
 }
