@@ -17,7 +17,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
-  // theme (dark / light) + persistence
+  // theme set to dark default
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {

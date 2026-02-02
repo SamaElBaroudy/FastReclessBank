@@ -130,7 +130,7 @@ export function createStyles(palette: ReturnType<typeof createPalette>, theme: T
     position: "absolute",
     top: 2,
     left: isDark ? 22 : 2, // slide
-    transition: "left 120ms ease",
+    transition: "left 500ms ease",
     background: isDark ? "#ffffff" : "#0f172a",
   };
 
