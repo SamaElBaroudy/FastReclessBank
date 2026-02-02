@@ -18,10 +18,7 @@ export default function App() {
   const [error, setError] = useState<string>("");
 
   // theme (dark / light) + persistence
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem("frb_theme");
-    return saved === "light" || saved === "dark" ? (saved as Theme) : "dark";
-  });
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
     localStorage.setItem("frb_theme", theme);
