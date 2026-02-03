@@ -45,8 +45,10 @@ public class Account {
     // adding the outgoing transfer to the buffer 
     public void addOutgoingTransfer(OutgoingTransfer transfer) {
         transfers[transferIndex] = transfer;
+        // index will start over when reaching the end of the buffer 
         transferIndex = (transferIndex + 1) % transfers.length;
-        transferCount = Math.min(transferCount + 1, transfers.length);
+        // count is maximum 50
+        transferCount = Math.min(transferCount + 1, transfers.length);  
 
     }
     
@@ -55,7 +57,8 @@ public class Account {
         OutgoingTransfer[] result = new OutgoingTransfer[transferCount];
         // transfering from new to old  
         for (int i = 0; i < transferCount; i++) {
-            int idx = (transferIndex - 1 - i + transfers.length) % transfers.length;
+            // iterating backward 
+            int idx = (transferIndex - 1 - i + transfers.length) % transfers.length; 
             result[i] = transfers[idx];
         }
         return result;
