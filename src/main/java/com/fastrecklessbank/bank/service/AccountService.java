@@ -54,11 +54,15 @@ public class AccountService {
     
 
     public void withdraw(UUID id, BigDecimal amount) {
+                
+        // making sure the amount is positive 
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
 
         Account account = getAccount(id);
+
+        // ID Validation
         if (account == null) {
             throw new AccountNotFoundException(id);
         }
@@ -75,9 +79,13 @@ public class AccountService {
     }
     
     public void transfer(UUID fromId, UUID toId, BigDecimal amount) {
+
+        // making sure the transfer is for different accounts 
         if (fromId.equals(toId)) {
             throw new IllegalArgumentException("Cannot transfer to same account");
         }
+
+        // making sure the amount is positive 
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
@@ -90,6 +98,7 @@ public class AccountService {
         if (to == null)
             throw new AccountNotFoundException(toId);
 
+        // to avoid deadlocks transfer always in the same order 
         Account first = fromId.compareTo(toId) < 0 ? from : to;
         Account second = fromId.compareTo(toId) < 0 ? to : from;
 
