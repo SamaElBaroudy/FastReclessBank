@@ -30,11 +30,13 @@ Revel8 tech challenge: a tiny in-memory bank API implemented with Java Spring Bo
 
 ## 📁 Project Structure (Backend)
 ```
-controller/   REST endpoints
-service/      Business logic & concurrency
-model/        Domain models
-dto/          Request/response objects
-exception/    Custom exceptions & global handler
+src/main/java/com/fastrecklessbank/bank
+ ├── controller/   # REST endpoints
+ ├── service/      # Business logic
+ ├── model/        # Domain models
+ ├── dto/          # Request/response DTOs
+ ├── exception/    # Custom exceptions & handlers
+ └── BankApplication.java
 ```
 
 ## 🚀 Quick start 
