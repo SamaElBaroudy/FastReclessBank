@@ -43,7 +43,8 @@ src/main/java/com/fastrecklessbank/bank
 
 ### 1) Run the backend (Spring Boot)
 ```bash
-./mvn spring-boot:run
+cd backend
+mvn spring-boot:run
 ```
 Backend runs on `http://localhost:8080`.
 
