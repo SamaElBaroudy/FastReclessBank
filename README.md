@@ -103,10 +103,18 @@ Response:
 - `404 Not Found`: account not found
 - `409 Conflict`: insufficient funds
 ## API Manual Testing
-
+A small bash script is included to exercise the API end-to-end (create accounts, deposit, withdraw, transfer, and basic validation).
+1. Start the backend:
+`mvn spring-boot:run`
+2. Run the test script:
+    ```bash
+    chmod +x scripts/smoke-test.sh
+    ./scripts/smoke-test.sh
+    ```
 ## Notes
 - Data is in-memory only. Restarting the backend clears all accounts.
 - No authentication or authorization (by design)
 - Currency handling is simplified (single currency)
 ## TODO 
-
+- Add integration tests 
+- Improve frontend UX  
