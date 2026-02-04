@@ -135,7 +135,7 @@ export function createStyles(palette: ReturnType<typeof createPalette>, theme: T
   };
 
   const headerTopSpace: CSSProperties = {
-    // so the fixed toggle doesn't overlap your title area on small screens
+    // so the fixed toggle doesn't overlap title area on small screens
     paddingTop: 6,
   };
 
