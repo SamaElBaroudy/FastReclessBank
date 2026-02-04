@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Account {
 
     private final UUID id;
     private BigDecimal balance;
+    @JsonIgnore
     private final ReentrantLock lock = new ReentrantLock();
     
     // ring buffer to save the 50 last outgoing transfer
